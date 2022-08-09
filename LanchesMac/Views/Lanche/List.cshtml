@@ -1,0 +1,22 @@
+﻿<!--Estamos passando a view model para poder acessar os dados de lanche e categorias, que foram definidos através das propriedades na view model. Para 
+    isso não podemos esquecer de no ViewImports colocar o namespace que será utilizado para pegar a referencia. 
+-->
+@model LancheListViewModel
+
+
+<!--E pegando também a categoria que foi definido na diretiva, pegando através da view model-->
+<div>
+    <h2>@Model.CategoriaAtual</h2>
+</div>
+
+<!--Percorrendo no laço foreach a quantidade de lanches na coleção, define uma variavel tipo Lanche, que vai estar na coleção model que é do tipo definido na diretiva model-->
+<!--A LancheListViewModel está referenciado a partial view _LanchesResumo que foi criado na pasta Shared-->
+<div class="container">
+<div class="row" >
+@foreach  (var lanche in Model.Lanches)
+{
+  // for para definir o model, o lanche representa cada tipo lanche que está obtendo da relação de Lanches
+  <partial name = "_LanchesResumo" for="@lanche" />
+}
+</div>
+ </div>

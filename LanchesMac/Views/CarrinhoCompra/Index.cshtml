@@ -1,0 +1,66 @@
+﻿@model CarrinhoCompraViewModel
+
+<div class="Container">
+    <div class="row">
+      <h2>@Html.ValidationMessage("ErroCarrinhoVazio")</h2>
+        <!--Imagem e texto-->
+        <!--<img src="~/images/icone.png" height="100" width="100" />-->
+        <div>
+            <h4> Seu carrinho de compras: </h4>
+        </div>
+        <!--Cabeçalho-->
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Quantidade</th>
+                    <th>Lanche</th>
+                    <th class="text-right">Preço</th>
+                    <th class="text-right">Subtotal</th>
+                    <th>Excluir</th>
+                </tr>
+            </thead>
+            <!--Corpo-->
+            <tbody>
+                @foreach (var item in Model.CarrinhoCompra.CarrinhoCompraItems)
+                {
+                    <tr>
+                        <td class="text-center"> @item.Quantidade</td>
+                        <td class="text-left"> @item.Lanche.Nome</td>
+                        <td class="text-right"> @item.Lanche.Preco.ToString("c")</td>
+                        <td class="text-right">
+                            @((item.Quantidade * item.Lanche.Preco).ToString("C"));
+                        </td>
+                        <td class="text-center">
+                            <!--Tag Helper 1 parametro definindo qual é o controlador, 2 parametro definindo o metodo action
+                                3 parametro passando o Id do lanche e o 4 parametro passando a imagem. Ou seja quando o usuário clicar na imagem
+                                vai acionar o metodo action do CarrinhoCompra passando o ID do lanche e excluindo.
+                            -->
+                            <a asp-controller="CarrinhoCompra" asp-action="RemoverItemNoCarrinhoCompra"
+                           asp-route-lancheId="@item.Lanche.LancheId">
+                                <img src=~/images/remove.png height="30" width="30" />
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <!--Rodape-->
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-right">Total:</td>
+                    <td class="text-right">
+                        @Model.CarrinhoCompraTotal.ToString("C");
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        <!--Botões-->
+        <div class="text-right">
+        <div class="btn-group">
+            <a class="btn btn-success" asp-controller="Pedido" asp-action="Checkout">Encerrar Pedido</a>
+            &nbsp;&nbsp;&nbsp;
+            <a class="btn btn-primary" asp-controller="Lanche" asp-action="List">Continuar Comprando</a>
+        </div>
+        <br />
+    </div>
+    </div>
+     </div>
